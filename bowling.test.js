@@ -88,17 +88,17 @@ describe("Bowling", () => {
     expect(bowling.isSpare(mockRegularFrame)).toBe(false);
   });
 
-  it.only("goes to the next frame after strike", () => {
+  it("goes to the next frame after strike", () => {
     bowling.roll(10);
     expect(bowling.getCurrentFrameIndex()).toBe(1);
   });
 
-  it.only("stays on the current frame after non strike roll", () => {
+  it("stays on the current frame after non strike roll", () => {
     bowling.roll(3);
     expect(bowling.getCurrentFrameIndex()).toBe(0);
   });
 
-  it.only("goes to the next frame after 2 rolls", () => {
+  it("goes to the next frame after 2 rolls", () => {
     bowling.roll(3);
     bowling.roll(3);
     expect(bowling.getCurrentFrameIndex()).toBe(1);
@@ -114,5 +114,20 @@ describe("Bowling", () => {
     // goes to the next frame
     expect(bowling.getCurrentFrameIndex()).toBe(1);
     expect(isCleanFrame(bowling.getCurrentFrame())).toBe(true);
+  });
+
+  it("adds correct bonus points if the previous roll was a spare", () => {
+    bowling.roll(1);
+    bowling.roll(9);
+    bowling.roll(5);
+    bowling.roll(4);
+    expect(bowling.getScore()).toBe(24);
+  });
+
+  it("adds correct bonus points if the previous roll was a strike", () => {
+    bowling.roll(10);
+    bowling.roll(3);
+    bowling.roll(2);
+    expect(bowling.getScore()).toBe(20);
   });
 });

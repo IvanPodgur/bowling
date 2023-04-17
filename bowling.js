@@ -17,8 +17,25 @@ class Bowling {
       throw new Error(PINS_NUMBER_OUT_OF_BOUNDARIES_ERROR);
     this.currentFrame.rolls.push(pins);
     this.currentFrame.total += pins;
-    if (this.isStrike(this.currentFrame) || this.currentFrame.rolls.length > 1)
+    if (
+      this.isStrike(this.currentFrame) ||
+      this.currentFrame.rolls.length > 1
+    ) {
+      this.addFrameBonus(this.currentFrame);
       this.nextFrame();
+    }
+  }
+
+  addFrameBonus() {
+    if (this.frames.length > 0) {
+      const previousFrame = this.frames[this.getCurrentFrameIndex() - 1];
+      if (this.isSpare(previousFrame)) {
+        previousFrame.total += this.currentFrame.rolls[0];
+      }
+      if (this.isStrike(previousFrame)) {
+        previousFrame.total += this.currentFrame.total;
+      }
+    }
   }
 
   nextFrame() {

@@ -17,7 +17,7 @@ class Bowling {
   }
 
   roll(pins) {
-    if (pins < 0 || pins > MAX_NUMBER_OF_PINS)
+    if (pins < 0 || pins > MAX_NUMBER_OF_PINS - this.currentFrame.total)
       throw new Error(PINS_NUMBER_OUT_OF_BOUNDARIES_ERROR);
     this.currentFrame.rolls.push(pins);
     this.currentFrame.total += pins;

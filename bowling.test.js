@@ -71,6 +71,13 @@ describe("Bowling", () => {
     }).toThrow(bowling.PINS_NUMBER_OUT_OF_BOUNDARIES_ERROR);
   });
 
+  it("throw an error if more than remaining pins rolled", () => {
+    bowling.roll(4);
+    expect(() => {
+      bowling.roll(7);
+    }).toThrow(bowling.PINS_NUMBER_OUT_OF_BOUNDARIES_ERROR);
+  });
+
   it("begins game with a clean frame with index 0", () => {
     expect(bowling.getCurrentFrameIndex()).toBe(0);
     expect(isCleanFrame(bowling.getCurrentFrame())).toBe(true);

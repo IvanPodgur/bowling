@@ -1,0 +1,17 @@
+{
+  "name": "take-home-programming",
+  "version": "0.1.0",
+  "main": "bowling.js",
+  "author": "Theodo <contact@theodo.co.uk>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Theodo-UK/take-home-programming.git"
+  },
+  "private": true,
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}

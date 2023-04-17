@@ -48,7 +48,7 @@ describe("Bowling", () => {
     bowling.roll(0);
     bowling.roll(0);
 
-    expect(bowling.getScore()).toBe(0);
+    expect(bowling.getScoreForPlayer()).toBe(0);
   });
 
   it("increments total score with each roll", () => {
@@ -56,7 +56,7 @@ describe("Bowling", () => {
     bowling.roll(1);
     bowling.roll(1);
     bowling.roll(2);
-    expect(bowling.getScore()).toBe(5);
+    expect(bowling.getScoreForPlayer()).toBe(5);
   });
 
   it("throws an error if less than 0 pins rolled", () => {
@@ -107,7 +107,7 @@ describe("Bowling", () => {
   it("records frame rolls and moves to the next frame", () => {
     bowling.roll(5);
     bowling.roll(4);
-    const firstFrame = bowling.getScoreBoard()[0];
+    const firstFrame = bowling.getFramesForPlayer()[0];
     expect(firstFrame.rolls[0]).toBe(5);
     expect(firstFrame.rolls[1]).toBe(4);
     expect(firstFrame.total).toBe(9);
@@ -121,13 +121,43 @@ describe("Bowling", () => {
     bowling.roll(9);
     bowling.roll(5);
     bowling.roll(4);
-    expect(bowling.getScore()).toBe(24);
+    expect(bowling.getScoreForPlayer()).toBe(24);
   });
 
   it("adds correct bonus points if the previous roll was a strike", () => {
     bowling.roll(10);
     bowling.roll(3);
     bowling.roll(2);
-    expect(bowling.getScore()).toBe(20);
+    expect(bowling.getScoreForPlayer()).toBe(20);
+  });
+
+  // @TODO last frame bonuses
+});
+
+describe("multiplayer bowling", () => {
+  it("starts one player game by default", () => {
+    const bowling = new Bowling();
+    expect(bowling.getNumberOfPlayers()).toBe(1);
+  });
+
+  it("can start a multiplayer game with fixed number of players", () => {
+    const bowling = new Bowling(3);
+    expect(bowling.getNumberOfPlayers()).toBe(3);
+  });
+
+  it("can get current player number, player 0 starts the game", () => {
+    const bowling = new Bowling(3);
+    expect(bowling.getCurrentPlayer()).toBe(0);
+  });
+
+  it("tracks score for all players and gives turn to the next player after frame is completed", () => {
+    const bowling = new Bowling(2);
+    bowling.roll(2);
+    bowling.roll(7);
+    expect(bowling.getCurrentPlayer()).toBe(1);
+    bowling.roll(10);
+    expect(bowling.getCurrentPlayer()).toBe(0);
+    expect(bowling.getScoreForPlayer(0)).toBe(9);
+    expect(bowling.getScoreForPlayer(1)).toBe(10);
   });
 });
